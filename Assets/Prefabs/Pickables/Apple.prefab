@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 1451637857905448819}
   - component: {fileID: 3729463972255392697}
   - component: {fileID: 1890566701346764906}
-  - component: {fileID: 1046750964359510101}
   - component: {fileID: 4112546645067000770}
-  - component: {fileID: 6178091472141375236}
+  - component: {fileID: 4358561437154103823}
+  - component: {fileID: 3224852183472365104}
   m_Layer: 0
   m_Name: Apple
-  m_TagString: Untagged
+  m_TagString: Pickable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2936711758989607532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.75, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3879756779710814929}
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 2936711758989607532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd82e2498cd11484a8765d95f685cfd9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -107,102 +107,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!82 &1046750964359510101
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2936711758989607532}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!135 &4112546645067000770
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -216,7 +120,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.19629455
   m_Center: {x: 0, y: 0.19075339, z: 0}
---- !u!114 &6178091472141375236
+--- !u!114 &4358561437154103823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,10 +129,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2936711758989607532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08fec8c73c101014ca19b94ea27c4a07, type: 3}
+  m_Script: {fileID: 11500000, guid: eeaf85c2da53c7249a9cfd945d16620d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickable: {fileID: 11400000, guid: 2920acb5a4efab1478f648dac7f8e6a4, type: 2}
+  type: 0
+  value: 1
+  clip: {fileID: 8300000, guid: d69325b4077da6648b45b1fe758f1677, type: 3}
+--- !u!54 &3224852183472365104
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936711758989607532}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8143048778020838697
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,17 +200,23 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 5
-        m_Name: Particle Rate
-        m_Overridden: 0
       - m_Value: 0
         m_Name: Glow Rate
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: 0.5
         m_Name: Glow Ground Rate
         m_Overridden: 1
-      - m_Value: 1
-        m_Name: Height
+      - m_Value: 10
+        m_Name: Particle Rate
+        m_Overridden: 1
+      - m_Value: 0.02
+        m_Name: Particle Speed
+        m_Overridden: 1
+      - m_Value: 3
+        m_Name: Glow Ground Size
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Glow Size
         m_Overridden: 0
     m_Vector2f:
       m_Array: []
@@ -296,7 +224,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.627451, y: 0.14117648, z: 0.13333334, w: 1}
+      - m_Value: {x: 0.754717, y: 0.007237651, z: 0, w: 0}
         m_Name: Color
         m_Overridden: 1
     m_Uint:

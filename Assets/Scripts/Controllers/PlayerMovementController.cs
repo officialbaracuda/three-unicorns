@@ -1,102 +1,75 @@
 using UnityEngine;
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerMovementView))]
 public class PlayerMovementController : MonoBehaviour
 {
-    private CharacterController controller;
     [SerializeField]
     private Transform camera;
     [SerializeField]
     private Transform groundCheck;
     [SerializeField]
     private LayerMask groundMask;
-
     [SerializeField]
-    private float speed = 12f;
+    private PlayerMovementData movementData;
 
+    private PlayerMovementView view;
     private Vector3 velocity;
     private Animator animator;
-
     private bool isGrounded;
-    private float turnSmootVelocity;
-    private float gravity = -9.81f;
-    private float jumpHeight = 3f;
-    private float groundDistance = 0.25f;
-    private float turnSmoothTime = 0.1f;
 
-    void Awake()
-    {
-        animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
-    }
+    void Awake() => view = GetComponent<PlayerMovementView>();
 
     void Update()
     {
-        // Check if player is standing on the floor
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
+        if (GameManager.Instance.IsGameRunning())
         {
-            StopJump();
-        }
-
-        // Basic player movement
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(x, 0, z);
-
-        if (direction.magnitude >= 0.01f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmootVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-            controller.Move(moveDirection * speed * Time.deltaTime);
+            // Check if player is standing on the floor
+            isGrounded = Physics.CheckSphere(groundCheck.position, movementData.groundDistance, groundMask);
             if (isGrounded)
             {
-                Walk();
+                view.StopJump();
             }
-            else {
-                StopWalk();
-            }  
+
+            // Basic player movement
+            float x = Input.GetAxisRaw("Horizontal");
+            float z = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(x, 0, z);
+
+            if (direction.magnitude >= 0.01f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref movementData.turnSmootVelocity, movementData.turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                view.Move(moveDirection * movementData.speed * Time.deltaTime);
+                
+                if (isGrounded)
+                {
+                    view.Walk();
+                }
+                else
+                {
+                    view.StopWalk();
+                }
+            }
+            else
+            {
+                view.StopWalk();
+            }
+
+            // Jumping
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(movementData.jumpHeight * -2f * movementData.gravity);
+                view.Jump();
+            }
+
+            velocity.y += movementData.gravity * Time.deltaTime;
+            view.Move(velocity * Time.deltaTime);
         }
-        else
-        {
-            StopWalk();
+        else {
+            view.StopJump();
+            view.StopWalk();
         }
-
-        // Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            Jump();
-        }
-
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-    }
-
-
-    private void Walk()
-    {
-        animator.SetBool(Constants.IS_WALKING, true);
-        animator.SetBool(Constants.IS_JUMPING, false);
-    }
-
-    private void StopWalk()
-    {
-        animator.SetBool(Constants.IS_WALKING, false);
-    }
-
-    private void Jump()
-    {
-        animator.SetBool(Constants.IS_WALKING, false);
-        animator.SetBool(Constants.IS_JUMPING, true);
-    }
-
-    private void StopJump()
-    {
-        animator.SetBool(Constants.IS_JUMPING, false);
     }
 }
